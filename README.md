@@ -69,7 +69,8 @@ The interface ProductRepository will use the inherited JpaRepository java class 
 Contains the methods interacting with the Product class and utilizing ProductRepository data access methods through the JpaRepository java class.
 
 
-Class and Method implementation
+### Class and Method implementation
+
 /*	
 Import classes
 Product, ProductRepository
@@ -93,7 +94,7 @@ readString to enter ProductId or ProductName
 Check to see what type of value was saved from the user.
 If String, use a method that checks the database for the existence of a record with the product name with a Jpa query method. If an int, check for the existence using findById.
 
-updateProduct()
+	updateProduct()
 This method prompts the user for productId. Checks to make sure the product exists. Once the product check shows an existing record in the database, the console displays the current product information. The product is saved to a local variable instance Product.  The follow-up console prompts the user for new values for product quantity and price. The user has the option to press enter if they want to skip the prompt. 
 New values are saved to local variables. The local variables are set to the new Product by using the set methods. The Product is saved to the database using the save() method. The same productId is saved from the old values so the record is updated.
 
