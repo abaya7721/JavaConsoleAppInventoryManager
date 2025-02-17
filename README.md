@@ -90,11 +90,11 @@ Product product, ProductRepository productRepository
 
 Class signature is - public class ProductService()
 
-	addProduct ()
+	addProduct (String name, BigDecimal price, int quantity)
 Create a new Product instance.
 Set new product values as the Console inputs through readInt() and readString().
 Scanner handles value validations.
-productRepository.add(new Product)
+productRepository.save(new Product)
 
 	viewProducts()
 All products are displayed using the findAll method in productRepository. The result is saved into a list of products. A for loop will go through each product to display each record on a new line. This will be formatted with a header.
