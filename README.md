@@ -1,9 +1,11 @@
 # Inventory Manager
+App which uses console-based interace to manage inventory stored in a SQL database.
 
 ## Classes
   1. View 
       * Console
       * Enum MenuOptions
+      * MainApp
   2. Model
       * Product
   3. Domain
@@ -15,8 +17,7 @@
 Initialize new Scanner
 displayMainMenu()
 
-The method will display the following and use enum class MenuOptions to determine which is selected through Scanner input and action is determined by a switch.
-Main Menu ex.
+The method will display the following as the main menu. Console will display other messages and prompts. 
 	===== Inventory Manager =====
 1. Add Product
 2. View Products
@@ -47,7 +48,13 @@ SEARCH_PRODUCT
 UPDATE_PRODUCT
 DELETE_PRODUCT
 
-The Menu Options enum is used in a while loop and switch to make the app functional through interaction with a console menu.
+The Menu Options enum is used in a while loop and switch to make the app functional through interaction with a console menu. 
+
+## MainApp
+Runs the SpringBoot main method which itself runs the method handling app interaction through the console. 
+run()
+Method handles the app flow based on inputs using a while loop.
+The enum MenuOptions determines which option is selected through Console input and action is determined by a switch and case going to specified method and subsequent actions.
 
 ## Model - Product
 Used with SpringBoot framework annotations to enable relational database connectivity, specifically with a mySQL database. To help manage data.
@@ -102,9 +109,4 @@ New values are saved to local variables. The local variables are set to the new 
 The method prompts the user for productId.  Checks to make sure the product exists. Once the product check shows an existing record in the database, the console displays the message and prompt for the user to confirm deletion. If the user selects yes, the product is deleted from the database, if the user selects no for confirmation the console returns to the main menu display.
 
 */
-
-
-
-
-
 
