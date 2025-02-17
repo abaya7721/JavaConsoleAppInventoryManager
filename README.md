@@ -18,7 +18,8 @@ Initialize new Scanner
 displayMainMenu()
 
 The method will display the following as the main menu. Console will display other messages and prompts. 
-	===== Inventory Manager =====
+
+===== Inventory Manager =====
 1. Add Product
 2. View Products
 3. Search Product
@@ -27,17 +28,17 @@ The method will display the following as the main menu. Console will display oth
 6. Save Inventory to File
 7. Load Inventory from File
 8. Exit
-Enter your choice:
 
-readInt(String prompt) method
-Takes user input after prompt. Method makes sure that values are within a certain range. If not, it continues to prompt the user for proper values. 
+### Console Methods
+readInt(String prompt) 
+* Takes user input after prompt. Method makes sure that values are within a certain range. If not, it continues to prompt the user for proper values. 
 If value less than or value greater than specific values or if value not an integer, display the message that value is incorrect and continue to ask for value.
 
-readString(String prompt) method
-Takes user input after prompt. Also, the method makes sure that the value in the Scanner is of type String otherwise displays a message that the value is incorrect and continues to ask for the correct value.
+readString(String prompt)
+* Takes user input after prompt. Also, the method makes sure that the value in the Scanner is of type String otherwise displays a message that the value is incorrect and continues to ask for the correct value.
 
 displayMessage(String message) / displayHeader(String header)
-Methods that display a menu header or a message to the user (to inform users of app status or provide feedback after value inputs).
+* Methods that display a menu header or a message to the user (to inform users of app status or provide feedback after value inputs).
 Makes use of System.out.print() or System.out.println()
 
 ## enum MenuOptions
@@ -48,7 +49,7 @@ SEARCH_PRODUCT
 UPDATE_PRODUCT
 DELETE_PRODUCT
 
-The Menu Options enum is used in a while loop and switch to make the app functional through interaction with a console menu. 
+The Menu Options enum is used in a while loop and switch to make the app code more human readable and simplifies options available for the switch during interaction. 
 
 ## MainApp
 Runs the SpringBoot main method which itself runs the method handling app interaction through the console. 
