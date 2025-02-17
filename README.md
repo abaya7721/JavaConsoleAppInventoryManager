@@ -1,5 +1,5 @@
 # Inventory Manager
-App which uses console-based interace to manage inventory stored in a SQL database.
+App which uses console-based interface to manage inventory stored in a SQL database.
 
 ## Classes
   1. View 
@@ -69,8 +69,10 @@ Contains the properties, constructors, setter/getters.
 	-quanity: int
 
 ##### Annotations - 
-	@Entity for the Product class to make accessible and manageable by the repository. Specifies the domain type.
- 	@Id for the int productId property which determines the entity identity type.
+	@Entity 
+ 	Used for the Product class to make accessible and manageable by the repository. Specifies the domain type.
+ 	@Id 
+  	Used for the int productId property which determines the entity identity type.
 
 ## Data Access
 #### ProductRepository
@@ -92,12 +94,12 @@ Class signature is - public class ProductService()
 
 	addProduct (String name, BigDecimal price, int quantity)
 Create a new Product instance.
-Set new product values as the Console inputs through readInt() and readString().
-Scanner handles value validations.
+Set new product values suing the console inputs through readInt() and readString().
+Scanner handles value validations.  
 productRepository.save(new Product)
 
 	viewProducts()
-All products are displayed using the findAll method in productRepository. The result is saved into a list of products. A for loop will go through each product to display each record on a new line. This will be formatted with a header.
+All products are displayed using the findAll() method in productRepository. The result is saved into a list of products. A for loop will go through each product to display each record on a new line. This will be formatted with a header.
 	
 	searchProduct()
 readString to enter ProductId or ProductName
@@ -105,8 +107,8 @@ Check to see what type of value was saved from the user.
 If String, use a method that checks the database for the existence of a record with the product name with a Jpa query method. If an int, check for the existence using findById.
 
 	updateProduct()
-This method prompts the user for productId. Checks to make sure the product exists. Once the product check shows an existing record in the database, the console displays the current product information. The product is saved to a local variable instance Product.  The follow-up console prompts the user for new values for product quantity and price. The user has the option to press enter if they want to skip the prompt. 
-New values are saved to local variables. The local variables are set to the new Product by using the set methods. The Product is saved to the database using the save() method. The same productId is saved from the old values so the record is updated.
+This method prompts the user for productId. Checks to make sure the product exists. Once the product check shows an existing record in the database, the console displays the current product information. The product is saved to a local variable instance Product.  The follow-up console prompts the user for new values for product quantity and price. The user has the option to press enter if they want to skip the prompt.  
+New values are saved to local variables. The local variables are set to the new Product by using the set methods. The local Product is saved to the database using the save() method. The same productId is used in order to update the record.
 
 	deleteProduct()
 The method prompts the user for productId.  Checks to make sure the product exists. Once the product check shows an existing record in the database, the console displays the message and prompt for the user to confirm deletion. If the user selects yes, the product is deleted from the database, if the user selects no for confirmation the console returns to the main menu display.
