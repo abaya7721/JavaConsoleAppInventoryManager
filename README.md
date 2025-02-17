@@ -30,24 +30,24 @@ The method will display the following as the main menu. Console will display oth
 8. Exit
 
 ### Console Methods
-readInt(String prompt) 
+		readInt(String prompt) 
 * Takes user input after prompt. Method makes sure that values are within a certain range. If not, it continues to prompt the user for proper values. 
 If value less than or value greater than specific values or if value not an integer, display the message that value is incorrect and continue to ask for value.
 
-readString(String prompt)
+		readString(String prompt)
 * Takes user input after prompt. Also, the method makes sure that the value in the Scanner is of type String otherwise displays a message that the value is incorrect and continues to ask for the correct value.
 
-displayMessage(String message) / displayHeader(String header)
+		displayMessage(String message) / displayHeader(String header)
 * Methods that display a menu header or a message to the user (to inform users of app status or provide feedback after value inputs).
 Makes use of System.out.print() or System.out.println()
 
 ## enum MenuOptions
-EXIT
-ADD_PRODUCT
-VIEW_PRODUCTS
-SEARCH_PRODUCT
-UPDATE_PRODUCT
-DELETE_PRODUCT
+	EXIT
+	ADD_PRODUCT
+	VIEW_PRODUCTS
+	SEARCH_PRODUCT
+	UPDATE_PRODUCT
+	DELETE_PRODUCT
 
 The Menu Options enum is used in a while loop and switch to make the app code more human readable and simplifies options available for the switch during interaction. 
 
@@ -58,17 +58,18 @@ Method handles the app flow based on inputs using a while loop.
 The enum MenuOptions determines which option is selected through Console input and action is determined by a switch and case going to specified method and subsequent actions.
 
 ## Model - Product
-Used with SpringBoot framework annotations to enable relational database connectivity, specifically with a mySQL database. To help manage data.
+Used with SpringBoot framework annotations to enable database connectivity, specifically with a mySQL database. To help manage data.
 Contains the properties, constructors, setter/getters.
-Property Names and Data Types:
-productId: int
-productName: String
-price: BigDecimal
-quanity: int
 
-Annotations - 
-@Entity for the Product class to make accessible and manageable by the repository. Specifies the domain type.
-@Id for the int productId property which determines the entity identity type.
+	Property Names and Data Types:
+	-productId: int
+	-productName: String
+	-price: BigDecimal
+	-quanity: int
+
+#### Annotations - 
+	@Entity for the Product class to make accessible and manageable by the repository. Specifies the domain type.
+ 	@Id for the int productId property which determines the entity identity type.
 
 ## Data Access - ProductRepository
 The interface ProductRepository will use the inherited JpaRepository java class to interact with the sql database using the <Product, Integer> as parameters.
@@ -77,9 +78,7 @@ The interface ProductRepository will use the inherited JpaRepository java class 
 Contains the methods interacting with the Product class and utilizing ProductRepository data access methods through the JpaRepository java class.
 
 
-### Class and Method implementation
-
-/*	
+### Class and Method implementation	
 Import classes
 Product, ProductRepository
 	
@@ -109,5 +108,4 @@ New values are saved to local variables. The local variables are set to the new 
 	deleteProduct()
 The method prompts the user for productId.  Checks to make sure the product exists. Once the product check shows an existing record in the database, the console displays the message and prompt for the user to confirm deletion. If the user selects yes, the product is deleted from the database, if the user selects no for confirmation the console returns to the main menu display.
 
-*/
 
