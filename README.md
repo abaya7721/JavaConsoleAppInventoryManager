@@ -51,13 +51,14 @@ Makes use of System.out.print() or System.out.println()
 
 The Menu Options enum is used in a while loop and switch to make the app code more human readable and simplifies options available for the switch during interaction. 
 
-## MainApp
+## MainApp Class
 Runs the SpringBoot main method which itself runs the method handling app interaction through the console. 
 run()
 Method handles the app flow based on inputs using a while loop.
 The enum MenuOptions determines which option is selected through Console input and action is determined by a switch and case going to specified method and subsequent actions.
 
-## Model - Product
+## Model 
+### Product
 Used with SpringBoot framework annotations to enable database connectivity, specifically with a mySQL database. To help manage data.
 Contains the properties, constructors, setter/getters.
 
@@ -67,14 +68,16 @@ Contains the properties, constructors, setter/getters.
 	-price: BigDecimal
 	-quanity: int
 
-#### Annotations - 
+##### Annotations - 
 	@Entity for the Product class to make accessible and manageable by the repository. Specifies the domain type.
  	@Id for the int productId property which determines the entity identity type.
 
-## Data Access - ProductRepository
+## Data Access
+#### ProductRepository
 The interface ProductRepository will use the inherited JpaRepository java class to interact with the sql database using the <Product, Integer> as parameters.
 
-## Domain - ProductService
+## Domain
+#### ProductService
 Contains the methods interacting with the Product class and utilizing ProductRepository data access methods through the JpaRepository java class.
 
 
