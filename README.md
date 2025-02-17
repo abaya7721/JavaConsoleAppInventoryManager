@@ -2,14 +2,14 @@
 
 ## Classes
   1. View 
-      Console
-      Enum MenuOptions
+      * Console
+      * Enum MenuOptions
   2. Model
-      Product
+      * Product
   3. Domain
-      ProductService
+      * ProductService
   4. Data Access
-      Interface ProductRepository
+      * Interface ProductRepository
 
 ## Console 
 Initialize new Scanner
@@ -99,7 +99,7 @@ This method prompts the user for productId. Checks to make sure the product exis
 New values are saved to local variables. The local variables are set to the new Product by using the set methods. The Product is saved to the database using the save() method. The same productId is saved from the old values so the record is updated.
 
 	deleteProduct()
-The method prompts the user for productId.  Checks to make sure the product exists. Once the product check shows an existing record in the database, the console displays the message and prompt for the user to confirm deletion. If the user confirms the product is deleted from the database, if the user selects no for confirmation the console returns to the main menu display.
+The method prompts the user for productId.  Checks to make sure the product exists. Once the product check shows an existing record in the database, the console displays the message and prompt for the user to confirm deletion. If the user selects yes, the product is deleted from the database, if the user selects no for confirmation the console returns to the main menu display.
 
 */
 
