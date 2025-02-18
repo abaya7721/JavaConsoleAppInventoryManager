@@ -3,16 +3,17 @@ App which uses console-based interface to manage inventory stored in a SQL datab
 
 ## Classes
   1. View 
-      * Console (#console)
-      * Enum MenuOptions (#enum-menu-options)
-      * MainApp (#mainapp)
+      * Console ([#console](https://github.com/abaya7721/JavaConsoleAppInventoryManager#console))
+      * Enum MenuOptions ([#enum-menu-options](https://github.com/abaya7721/JavaConsoleAppInventoryManager#console))
+      * MainApp ([#mainapp](https://github.com/abaya7721/JavaConsoleAppInventoryManager#console))
   2. Model
-      * Product (#product)
+      * Product ([#product](https://github.com/abaya7721/JavaConsoleAppInventoryManager#console))
   3. Data Access
-      * Interface ProductRepository (#interface-productrepository)
+      * Interface ProductRepository ([#interface-productrepository](https://github.com/abaya7721/JavaConsoleAppInventoryManager#console))
   4. Domain
-      * ProductService (#productservice
+      * ProductService ([#productservice](https://github.com/abaya7721/JavaConsoleAppInventoryManager#console))
 
+## View
 ### Console
 Initialize new Scanner
 displayMainMenu()
