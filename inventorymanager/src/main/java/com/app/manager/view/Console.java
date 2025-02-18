@@ -26,6 +26,11 @@ public class Console {
         return console.nextLine();
     }
 
+    public String pressEnter(String message) {
+        System.out.print(message);
+        return console.nextLine();
+    }
+
     public String readRequiredString(String message) {
         String result;
         do {
@@ -37,7 +42,7 @@ public class Console {
         return result;
     }
 
-    private int readInt(String message) {
+    public int readInt(String message) {
         String input = null;
         int result = 0;
         boolean isValid = false;
@@ -62,6 +67,23 @@ public class Console {
                 System.out.printf("Value must be between %s and %s.%n", min, max);
             }
         } while (result < min || result > max);
+        return result;
+    }
+
+    public double readDouble(String message) {
+        String input = null;
+        double result = 0;
+        boolean isValid = false;
+        do {
+            try {
+                input = readRequiredString(message);
+                result = Double.parseDouble(input);
+                isValid = true;
+            } catch (NumberFormatException ex) {
+                System.out.printf("%s is not a valid number.%n", input);
+            }
+        } while (!isValid);
+
         return result;
     }
 

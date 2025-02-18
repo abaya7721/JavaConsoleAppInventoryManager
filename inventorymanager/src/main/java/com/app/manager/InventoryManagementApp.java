@@ -1,6 +1,8 @@
 package com.app.manager;
 
 import com.app.manager.domain.ProductService;
+import com.app.manager.model.Product;
+import com.app.manager.repository.ProductRepository;
 import com.app.manager.view.Console;
 import com.app.manager.view.MenuOptions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,51 +10,86 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.List;
+import java.util.Optional;
 
 @SpringBootApplication
 public class InventoryManagementApp implements CommandLineRunner {
 
-	Console console = new Console();
-	ProductService productService = new ProductService();
+    @Autowired
+    private ProductRepository productRepository;
 
-	public static void main(String[] args) {
-		SpringApplication.run(InventoryManagementApp.class, args);
-	}
+    private Console console = new Console();
+    private ProductService productService = new ProductService();
 
 
-	public void run(String[] args) {
+    public static void main(String[] args) {
+        SpringApplication.run(InventoryManagementApp.class, args);
+    }
 
-		viewProducts();
-		MenuOptions option;
-		do {
-			option = console.displayMainMenu();
-			switch (option) {
-				case ADD_PRODUCT:
-					//displayAllItems();
-					break;
-				case VIEW_PRODUCTS:
-					viewProducts();
-					break;
-				case SEARCH_PRODUCTS:
-					//updateItem();
-					break;
-				case UPDATE_PRODUCT:
-					//searchCustomer();
-					break;
-				case DELETE_PRODUCT:
-					//updateCustomer();
-					break;
-			}
-		} while (option != MenuOptions.EXIT);
 
-		console.displayHeader("Goodbye");
-	}
+    public void run(String[] args) {
 
-	public void addItem(){
+        MenuOptions option;
+        do {
+            option = console.displayMainMenu();
+            switch (option) {
+                case ADD_PRODUCT:
+                    addProduct();
+                    console.pressEnter("Press Enter to return to main menu");
+                    break;
+                case VIEW_PRODUCTS:
+                    viewProducts();
+                    console.pressEnter("Press Enter to return to main menu");
+                    break;
+                case SEARCH_PRODUCTS:
+                    //updateItem();
+                    break;
+                case UPDATE_PRODUCT:
+                    //searchCustomer();
+                    break;
+                case DELETE_PRODUCT:
+                    //updateCustomer();
+                    break;
+            }
+        } while (option != MenuOptions.EXIT);
 
-	}
+        console.displayHeader("Goodbye");
+    }
 
-	public void viewProducts(){
-		productService.showProductsInInventory();
-	}
+    public void addProduct() {
+        console.displayHeader("===== Add Product =====");
+        int productId = console.readInt("Enter Product ID: ", 100, 200);
+
+        Optional<Product> product = productRepository.findById(productId);
+        if (product.isPresent()) {
+            console.displayHeader("Product exists.");
+        }
+
+        else{
+            String productName = console.readRequiredString("Enter Product Name:");
+            int quantity = console.readInt("Enter Quantity: ", 0, 1000);
+            double price = console.readDouble("Enter Price: ");
+            BigDecimal decimalPrice = new BigDecimal(price);
+            Product newProduct = new Product(productName, decimalPrice, quantity);
+            newProduct.setProductId(productId);
+            productRepository.save(newProduct);
+            console.displayHeader("Product Added Successfully!");
+        }
+    }
+
+    public void viewProducts() {
+        List<Product> products = productRepository.findAll();
+        console.displayHeader("===== Inventory List =====");
+        console.displayHeader("ID    | Name          | Quantity         | Price  ");
+        console.displayHeader("----------------------------------------");
+        for(Product product : products){
+            System.out.println(product.getProductId()+"   | "+product.getName()+"       | "+product.getQuantity()+"       | $"+product.getPrice());
+        }
+        console.displayHeader("----------------------------------------");
+    }
+
+    
 }

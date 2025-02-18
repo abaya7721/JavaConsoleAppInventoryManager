@@ -10,7 +10,7 @@ public class ProductService {
 
 
     @Autowired
-    public ProductRepository productRepository;
+    private ProductRepository productRepository;
 
 
     public void addProductToInventory(){

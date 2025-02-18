@@ -7,12 +7,12 @@ import jakarta.persistence.Id;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 @Entity
 public class Product implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int productId;
     private String name;
     private BigDecimal price;
@@ -23,7 +23,7 @@ public class Product implements Serializable {
 
     public Product(String name, BigDecimal price, int quantity) {
         this.name = name;
-        this.price = price;
+        this.price = price.setScale(2, RoundingMode.CEILING);
         this.quantity = quantity;
     }
 
