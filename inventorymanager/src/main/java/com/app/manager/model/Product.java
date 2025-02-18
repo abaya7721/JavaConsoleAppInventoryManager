@@ -15,7 +15,7 @@ public class Product implements Serializable {
     @Id
     private int productId;
     private String name;
-    private BigDecimal price = new BigDecimal("0.00").setScale(2, RoundingMode.HALF_UP);
+    private BigDecimal price;
     private int quantity;
 
     public Product() {
@@ -23,7 +23,7 @@ public class Product implements Serializable {
 
     public Product(String name, BigDecimal price, int quantity) {
         this.name = name;
-        this.price = price.setScale(2);
+        this.price = price.setScale(2, RoundingMode.HALF_UP);
         this.quantity = quantity;
     }
 
@@ -63,6 +63,13 @@ public class Product implements Serializable {
     public String toString() {
         return
                 "\nID: " + productId +
+                "\nName: " + name +
+                "\nQuantity: "+ quantity+
+                "\nPrice: $" + price;
+    }
+
+    public String toStringNoId() {
+        return
                 "\nName: " + name +
                 "\nQuantity: "+ quantity+
                 "\nPrice: $" + price;

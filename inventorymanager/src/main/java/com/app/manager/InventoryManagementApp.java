@@ -23,7 +23,7 @@ public class InventoryManagementApp implements CommandLineRunner {
 
     private Console console = new Console();
     private ProductService productService = new ProductService();
-
+    private int dbRecords;
 
     public static void main(String[] args) {
         SpringApplication.run(InventoryManagementApp.class, args);
@@ -34,6 +34,7 @@ public class InventoryManagementApp implements CommandLineRunner {
 
         MenuOptions option;
         do {
+            dbRecords = productRepository.findAll().size()+100;
             option = console.displayMainMenu();
             switch (option) {
                 case ADD_PRODUCT:
@@ -42,6 +43,7 @@ public class InventoryManagementApp implements CommandLineRunner {
                     break;
                 case VIEW_PRODUCTS:
                     viewProducts();
+                    console.displayHeader("\n");
                     console.pressEnter("Press Enter to return to main menu");
                     break;
                 case SEARCH_PRODUCTS:
@@ -49,7 +51,8 @@ public class InventoryManagementApp implements CommandLineRunner {
                     console.pressEnter("Press Enter to return to main menu");
                     break;
                 case UPDATE_PRODUCT:
-                    //updateProduct);
+                    updateProduct();
+                    console.pressEnter("Press Enter to return to main menu");
                     break;
                 case DELETE_PRODUCT:
                     //updateCustomer();
@@ -62,7 +65,7 @@ public class InventoryManagementApp implements CommandLineRunner {
 
     public void addProduct() {
         console.displayHeader("===== Add Product =====\n");
-        int productId = console.readInt("Enter Product ID: ", 100, 200);
+        int productId = console.readInt("Enter Product ID: ", 100, dbRecords+1);
 
         Optional<Product> product = productRepository.findById(productId);
         if (product.isPresent()) {
@@ -101,7 +104,8 @@ public class InventoryManagementApp implements CommandLineRunner {
             int productId = Integer.parseInt(productSearch);
             product = productRepository.findById(productId);
             if(product.isPresent()){
-                return "Product Found: \n"+ product;
+                Product productUnwrap = product.get();
+                return "Product Found: \n"+ productUnwrap;
             }
             else {
                 return "No product found";
@@ -110,7 +114,8 @@ public class InventoryManagementApp implements CommandLineRunner {
         else {
             product = productRepository.findByName(productSearch);
             if(product.isPresent()){
-                return "Product Found:\n" + product;
+                Product productUnwrap = product.get();
+                return "Product Found:\n" + productUnwrap;
             }
             else{
                 return "No product found";
@@ -119,9 +124,37 @@ public class InventoryManagementApp implements CommandLineRunner {
     }
 
     public void updateProduct(){
+        console.displayHeader("===== Update Product =====\n\n\n");
+        int productId = console.readInt("Enter Product ID: ", 100, dbRecords);
+
+        Optional<Product> product = productRepository.findById(productId);
+        if (product.isPresent()) {
+            console.displayHeader("Current details");
+            Product productUnwrap = product.get();
+            console.displayHeader(productUnwrap.toString());
+
+//            String quantity = console.checkStringIsEmpty("Enter quantity (or press Enter to skip");
+//            String price = console.checkStringIsEmpty("Enter price (or press Enter to skip");
+
+            int validQuantity = console.checkQuantity("Enter quantity (or press Enter to skip)");
+            double validPrice = console.checkPrice("Enter quantity (or press Enter to skip)");
+
+            if(validQuantity>-1){
+                product.get().setQuantity(validQuantity);
+            }
+            if(validPrice != -1.00){
+                product.get().setPrice(BigDecimal.valueOf(validPrice));
+            }
+            console.displayHeader("Product updated successfully");
+        }
+        else {
+            console.displayHeader("Product not found");
+        }
 
     }
 
+    public void deleteProduct(){
 
+    }
 
 }

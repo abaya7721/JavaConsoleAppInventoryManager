@@ -27,8 +27,8 @@ public class Console {
     }
 
     public void pressEnter(String message) {
-        System.out.print(message);
-        console.next();
+        System.out.println(message);
+        console.nextLine();
     }
 
     public String readRequiredString(String message) {
@@ -87,4 +87,95 @@ public class Console {
         return result;
     }
 
+    public int readIntOrEnter(String message) {
+        String input = null;
+        int result = 0;
+        boolean isValid = false;
+        do {
+            try {
+                input = readRequiredString(message);
+                result = Integer.parseInt(input);
+                isValid = true;
+            } catch (NumberFormatException ex) {
+                System.out.printf("%s is not a valid number.%n", input);
+            }
+        } while (!isValid);
+
+        return result;
+    }
+
+    public String checkStringIsEmpty(String message){
+        String result;
+        result = readString(message);
+
+        // return not empty is true or false
+        return result.trim();
+        }
+
+    public double checkPrice(String message) {
+        String result;
+        result = readString(message);
+        if(result.isEmpty()){
+            return -1.00;
+        }
+        else {
+            return validatePrice(result, 0.00, 10000.00);
+        }
+    }
+
+
+    public int checkQuantity(String message) {
+        String result;
+        result = readString(message);
+        if(result.isEmpty()){
+            return -1;
+        }
+        else {
+            return validateQuantity(result, 0, 1000);
+        }
+    }
+
+    private int validateQuantity(String input, int min, int max){
+        int quantity;
+        boolean isValid = false;
+            do {
+                try {
+                    Integer.parseInt(input);
+                    isValid = true;
+                } catch (NumberFormatException ex) {
+                    System.out.printf("%s is not a valid number.%n", input);
+                }
+            } while (!isValid);
+
+            do {
+                quantity = Integer.parseInt(input);
+                if (quantity < min || quantity > max) {
+                    System.out.printf("Value must be between %s and %s.%n", min, max);
+                }
+            } while (quantity < min || quantity > max);
+        return Integer.parseInt(input);
+    }
+
+    private double validatePrice(String input, double min, double max){
+        double price;
+        boolean isValid = false;
+        do {
+            try {
+                Double.parseDouble(input);
+                isValid = true;
+            } catch (NumberFormatException ex) {
+                System.out.printf("%s is not a valid number.%n", input);
+            }
+        } while (!isValid);
+
+        do {
+            price = Double.parseDouble(input);
+            if (price < min || price > max) {
+                System.out.printf("Value must be between %s and %s.%n", min, max);
+            }
+        } while (price < min || price > max);
+        return Double.parseDouble(input);
+    }
+
 }
+
