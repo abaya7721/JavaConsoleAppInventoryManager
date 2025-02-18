@@ -3,17 +3,17 @@ App which uses console-based interface to manage inventory stored in a SQL datab
 
 ## Classes
   1. View 
-      * Console
-      * Enum MenuOptions
-      * MainApp
+      * Console (#console)
+      * Enum MenuOptions (#enum-menu-options)
+      * MainApp (#mainapp)
   2. Model
-      * Product
-  3. Domain
-      * ProductService
-  4. Data Access
-      * Interface ProductRepository
+      * Product (#product)
+  3. Data Access
+      * Interface ProductRepository (#interface-productrepository)
+  4. Domain
+      * ProductService (#productservice
 
-## Console 
+### Console
 Initialize new Scanner
 displayMainMenu()
 
@@ -41,7 +41,7 @@ If value less than or value greater than specific values or if value not an inte
 * Methods that display a menu header or a message to the user (to inform users of app status or provide feedback after value inputs).
 Makes use of System.out.print() or System.out.println()
 
-## enum MenuOptions
+### enum MenuOptions
 	EXIT
 	ADD_PRODUCT
 	VIEW_PRODUCTS
@@ -51,7 +51,7 @@ Makes use of System.out.print() or System.out.println()
 
 The Menu Options enum is used in a while loop and switch to make the app code more human readable and simplifies options available for the switch during interaction. 
 
-## MainApp Class
+### MainApp
 Runs the SpringBoot main method which itself runs the method handling app interaction through the console. 
 run()
 Method handles the app flow based on inputs using a while loop.
@@ -75,11 +75,11 @@ Contains the properties, constructors, setter/getters.
   	Used for the int productId property which determines the entity identity type.
 
 ## Data Access
-#### ProductRepository
+### ProductRepository
 The interface ProductRepository will use the inherited JpaRepository java class to interact with the sql database using the <Product, Integer> as parameters.
 
 ## Domain
-#### ProductService
+### ProductService
 Contains the methods interacting with the Product class and utilizing ProductRepository data access methods through the JpaRepository java class.
 
 
