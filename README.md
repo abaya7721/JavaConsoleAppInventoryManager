@@ -1,7 +1,7 @@
 # Inventory Manager
 App which uses console-based interface to manage inventory stored in a SQL database.
 
-## Classes
+## Project Structure
   1. View 
       * Console ([#console](https://github.com/abaya7721/JavaConsoleAppInventoryManager#console))
       * Enum MenuOptions ([#enum-menu-options](https://github.com/abaya7721/JavaConsoleAppInventoryManager#enum-menuoptions))
@@ -53,9 +53,8 @@ Makes use of System.out.print() or System.out.println()
 The Menu Options enum is used in a while loop and switch to make the app code more human readable and simplifies options available for the switch during interaction. 
 
 ### MainApp
-Runs the SpringBoot main method which itself runs the method handling app interaction through the console. 
-run()
-Method handles the app flow based on inputs using a while loop.
+Runs the SpringBoot main method which itself runs the method handling app interaction through the console.  
+The run() method handles the app flow based on inputs using a while loop.
 The enum MenuOptions determines which option is selected through Console input and action is determined by a switch and case going to specified method and subsequent actions.
 
 ## Model 
