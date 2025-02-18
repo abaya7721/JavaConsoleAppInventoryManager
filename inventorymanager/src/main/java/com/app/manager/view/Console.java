@@ -6,10 +6,10 @@ public class Console {
     private Scanner console = new Scanner(System.in);
 
     public MenuOptions displayMainMenu(){
-        displayHeader("===== Inventory Manager =====");
+        displayHeader("===== Inventory Manager =====\n");
         MenuOptions[] options = MenuOptions.values();
         for (int i = 0; i < options.length; i++) {
-            System.out.printf("%s. %s%n", i + 1, options[i].getMessage());
+            System.out.printf("%s. %s%n\n", i + 1, options[i].getMessage());
         }
 
         String msg = String.format("Select [%s-%s]:", 1, options.length);
@@ -26,9 +26,9 @@ public class Console {
         return console.nextLine();
     }
 
-    public String pressEnter(String message) {
+    public void pressEnter(String message) {
         System.out.print(message);
-        return console.nextLine();
+        console.next();
     }
 
     public String readRequiredString(String message) {

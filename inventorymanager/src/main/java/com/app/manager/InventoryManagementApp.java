@@ -45,10 +45,11 @@ public class InventoryManagementApp implements CommandLineRunner {
                     console.pressEnter("Press Enter to return to main menu");
                     break;
                 case SEARCH_PRODUCTS:
-                    //updateItem();
+                    console.displayHeader(searchProduct()+"\n");
+                    console.pressEnter("Press Enter to return to main menu");
                     break;
                 case UPDATE_PRODUCT:
-                    //searchCustomer();
+                    //updateProduct);
                     break;
                 case DELETE_PRODUCT:
                     //updateCustomer();
@@ -60,7 +61,7 @@ public class InventoryManagementApp implements CommandLineRunner {
     }
 
     public void addProduct() {
-        console.displayHeader("===== Add Product =====");
+        console.displayHeader("===== Add Product =====\n");
         int productId = console.readInt("Enter Product ID: ", 100, 200);
 
         Optional<Product> product = productRepository.findById(productId);
@@ -91,5 +92,36 @@ public class InventoryManagementApp implements CommandLineRunner {
         console.displayHeader("----------------------------------------");
     }
 
-    
+    public String searchProduct(){
+        Optional<Product> product;
+        console.displayHeader("===== Search Product =====");
+        String productSearch = console.readRequiredString("Enter Product ID or Name");
+        boolean check = productSearch.matches("\\d+");
+        if(check){
+            int productId = Integer.parseInt(productSearch);
+            product = productRepository.findById(productId);
+            if(product.isPresent()){
+                return "Product Found: \n"+ product;
+            }
+            else {
+                return "No product found";
+            }
+        }
+        else {
+            product = productRepository.findByName(productSearch);
+            if(product.isPresent()){
+                return "Product Found:\n" + product;
+            }
+            else{
+                return "No product found";
+            }
+        }
+    }
+
+    public void updateProduct(){
+
+    }
+
+
+
 }
