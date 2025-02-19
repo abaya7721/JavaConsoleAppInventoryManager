@@ -3,8 +3,11 @@ package com.app.manager.view;
 import java.util.Scanner;
 
 public class Console {
+
+    // Scanner instance to read and use console inputs
     private Scanner console = new Scanner(System.in);
 
+    // Display menu options for user selection and saves selection to determine next action
     public MenuOptions displayMainMenu(){
         displayHeader("\n===== Inventory Manager =====\n");
         MenuOptions[] options = MenuOptions.values();
@@ -17,20 +20,24 @@ public class Console {
         return options[value - 1];
     }
 
+    // Displays a String message or header
     public void displayHeader(String header){
         System.out.println(header);
     }
 
+    // Used for prompting user input
     private String readString(String message) {
         System.out.print(message);
         return console.nextLine();
     }
 
+    // Displays message for user to hit the Enter key as an option
     public void pressEnter(String message) {
         System.out.println(message);
         console.nextLine();
     }
 
+    // Uses readString for prompting user input and validating the input is not empty
     public String readRequiredString(String message) {
         String result;
         do {
@@ -42,6 +49,9 @@ public class Console {
         return result;
     }
 
+    // Prompts a user for numerical value
+    // Uses readRequiredString ensuring input is not empty
+    // Checks to make sure the value is a valid type of integer otherwise throws a message of invalid number
     public int readInt(String message) {
         String input = null;
         int result = 0;
@@ -59,6 +69,8 @@ public class Console {
         return result;
     }
 
+    // Adds further checks and validation during user numerical input
+    // The input has to be within certain parameters defined during method call
         public int readInt(String prompt, int min, int max){
         int result;
         do {
@@ -70,6 +82,7 @@ public class Console {
         return result;
     }
 
+    //  Checks for valid numerical values of type double
     public double readDouble(String message) {
         String input = null;
         double result = 0;
@@ -87,6 +100,9 @@ public class Console {
         return result;
     }
 
+//     During product update user can enter new price
+//     Checks if input is empty  to decide the application flow - continue or branch into else
+//     If input double is not empty, the value is passed through a data type validation method
     public double checkPrice(String message) {
         String result;
         result = readString(message);
@@ -98,7 +114,9 @@ public class Console {
         }
     }
 
-
+    // During product update user can enter new quantity
+    // Checks if input is empty to decide the application flow - continue or branch into else
+    // If input int is not empty, the value is passed through a data type validation method
     public int checkQuantity(String message) {
         String result;
         result = readString(message);
@@ -110,6 +128,7 @@ public class Console {
         }
     }
 
+    // Validates an int data value within a range
     private int validateQuantity(String input, int min, int max){
         int quantity;
         boolean isValid = false;
@@ -131,6 +150,7 @@ public class Console {
         return Integer.parseInt(input);
     }
 
+    // Validates double data value within a range
     private double validatePrice(String input, double min, double max){
         double price;
         boolean isValid = false;

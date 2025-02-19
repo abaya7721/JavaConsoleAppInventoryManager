@@ -1,6 +1,5 @@
 package com.app.manager;
 
-import com.app.manager.domain.ProductService;
 import com.app.manager.model.Product;
 import com.app.manager.repository.ProductRepository;
 import com.app.manager.view.Console;
@@ -11,7 +10,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,7 +32,7 @@ public class InventoryManagementApp implements CommandLineRunner {
     // Uses a while loop to display a menu and user chooses from options to interact with product inventory
     // Continues until the option to exit is selected
     public void run(String[] args) {
-        String enter = "Press Enter to return to main menu";
+        String enter = "Press Enter to return to main menu...";
         MenuOptions option;
         do {
             dbRecords = productRepository.findAll().size() + 500;
@@ -46,7 +44,8 @@ public class InventoryManagementApp implements CommandLineRunner {
                     break;
                 case VIEW_PRODUCTS:
                     viewProducts();
-                    console.pressEnter("\n" + enter);
+                    console.displayHeader("\n");
+                    console.pressEnter(enter);
                     break;
                 case SEARCH_PRODUCTS:
                     console.displayHeader(searchProduct() + "\n");
@@ -68,17 +67,18 @@ public class InventoryManagementApp implements CommandLineRunner {
     // Requests a product ID that is then verified against the database
     // If product exists in the database the operation stops
     // If product doesn't exist, the user must enter a product name, quantity and price
+    // New product with details is added to the inventory database
     public void addProduct() {
         console.displayHeader("===== Add Product =====\n");
-        int productId = console.readInt("Enter Product ID: ", 100, dbRecords + 1);
+        int productId = console.readInt("Enter Product ID: ", 100, dbRecords);
 
         Optional<Product> product = productRepository.findById(productId);
         if (product.isPresent()) {
             console.displayHeader("Product exists.");
         } else {
             String productName = console.readRequiredString("Enter Product Name:");
-            int quantity = console.readInt("Enter Quantity: ", 0, 1000);
-            double price = console.readDouble("Enter Price: ");
+            int quantity = console.checkQuantity("Enter Quantity: ");
+            double price = console.checkPrice("Enter Price: ");
             BigDecimal decimalPrice = new BigDecimal(price);
             Product newProduct = new Product(productName, decimalPrice, quantity);
             newProduct.setProductId(productId);
@@ -87,7 +87,8 @@ public class InventoryManagementApp implements CommandLineRunner {
         }
     }
 
-    // A display of all the products in the database is presented with ID, Name, Quantity, Price
+    // Displays all the products in the database with ID, Name, Quantity, Price as a header
+    // Each product record details are displayed on a new line
     // Uses the ProductRepository method from JpaRepository findAll()
     public void viewProducts() {
         List<Product> products = productRepository.findAll();
@@ -96,7 +97,8 @@ public class InventoryManagementApp implements CommandLineRunner {
         String ID = "ID";
         String quantity = "Quantity";
         String price = "Price";
-        console.displayHeader(String.format("%-3s | %-13s | %-12s | %-1s", ID, name, quantity, price));
+        // Formats the number of spaces, left-aligned, and separated by pipe
+        console.displayHeader(String.format("%-3s | %-12s | %-14s | %-1s", ID, name, quantity, price));
         console.displayHeader("----------------------------------------");
         for (Product product : products) {
             System.out.println(product.productLineString());
@@ -142,12 +144,12 @@ public class InventoryManagementApp implements CommandLineRunner {
     //      - The price is validated for zero, negative, and non-numerical values
     // Valid new entries are set to product properties updating the product details or product is unmodified if no new values
     public void updateProduct() {
-        console.displayHeader("===== Update Product =====\n\n\n");
-        int productId = console.readInt("Enter Product ID: ", 100, dbRecords);
+        console.displayHeader("===== Update Product =====");
+        int productId = console.readInt("Enter Product ID: \n\n", 100, dbRecords);
 
         Optional<Product> product = productRepository.findById(productId);
         if (product.isPresent()) {
-            console.displayHeader("Current details");
+            console.displayHeader("Current Details:");
             Product productUnwrap = product.get();
             console.displayHeader(productUnwrap.toStringNoId());
 

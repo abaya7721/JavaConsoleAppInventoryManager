@@ -5,11 +5,14 @@ import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
 
+// @Entity used to denote this class corresponds to the table in a database
+// Differentiation is handled by @DiscriminatorValue
+// Product is differentiated by the 'perishable' value in column 'product_type'
+
 @Entity
 @DiscriminatorValue("perishable")
 public class PerishableProduct extends Product{
 
-    @Column(nullable = true)
     @Temporal(TemporalType.DATE)
     private Date expirationDate;
 
