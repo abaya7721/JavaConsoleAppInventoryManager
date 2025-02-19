@@ -127,7 +127,7 @@ public class InventoryManagementApp implements CommandLineRunner {
         if (product.isPresent()) {
             console.displayHeader("Current details");
             Product productUnwrap = product.get();
-            console.displayHeader(productUnwrap.toString());
+            console.displayHeader(productUnwrap.toStringNoId());
 
             int validQuantity = console.checkQuantity("Enter quantity (or press Enter to skip)");
             double validPrice = console.checkPrice("Enter price (or press Enter to skip)");
@@ -146,10 +146,10 @@ public class InventoryManagementApp implements CommandLineRunner {
 
     public void deleteProduct() {
         console.displayHeader("===== Delete Product =====");
-        int productId = console.readInt("Enter Product ID: ", 100, dbRecords);
+        int productId = console.readInt("Enter Product ID:", 100, dbRecords);
         Optional<Product> product = productRepository.findById(productId);
         if (product.isPresent()) {
-            String deletion = console.readRequiredString("Are you sure you want to delete? (Y/N):");
+            String deletion = console.readRequiredString("\nAre you sure you want to delete? (Y/N):\n");
             if (deletion.equals("y")) {
                 productRepository.delete(product.get());
                 console.displayHeader("Product successfully deleted.");
