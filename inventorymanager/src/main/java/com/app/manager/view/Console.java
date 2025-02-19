@@ -6,7 +6,7 @@ public class Console {
     private Scanner console = new Scanner(System.in);
 
     public MenuOptions displayMainMenu(){
-        displayHeader("===== Inventory Manager =====\n");
+        displayHeader("\n===== Inventory Manager =====\n");
         MenuOptions[] options = MenuOptions.values();
         for (int i = 0; i < options.length; i++) {
             System.out.printf("%s. %s%n\n", i + 1, options[i].getMessage());

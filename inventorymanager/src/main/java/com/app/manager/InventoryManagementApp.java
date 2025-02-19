@@ -21,20 +21,23 @@ public class InventoryManagementApp implements CommandLineRunner {
     @Autowired
     private ProductRepository productRepository;
 
-    private Console console = new Console();
-    private ProductService productService = new ProductService();
+    // Console instance for inputs and inventory interaction
+    // dbRecords for maximum integer values
+    private Console console = new Console();;
     private int dbRecords;
 
+    // Main method to start the SpringBoot application
     public static void main(String[] args) {
         SpringApplication.run(InventoryManagementApp.class, args);
     }
 
-
+    // Uses a while loop to display a menu and user chooses from options to interact with product inventory
+    // Continues until the option to exit is selected
     public void run(String[] args) {
         String enter = "Press Enter to return to main menu";
         MenuOptions option;
         do {
-            dbRecords = productRepository.findAll().size() + 100;
+            dbRecords = productRepository.findAll().size() + 500;
             option = console.displayMainMenu();
             switch (option) {
                 case ADD_PRODUCT:
@@ -43,8 +46,7 @@ public class InventoryManagementApp implements CommandLineRunner {
                     break;
                 case VIEW_PRODUCTS:
                     viewProducts();
-                    console.displayHeader("\n");
-                    console.pressEnter(enter);
+                    console.pressEnter("\n" + enter);
                     break;
                 case SEARCH_PRODUCTS:
                     console.displayHeader(searchProduct() + "\n");
@@ -60,10 +62,12 @@ public class InventoryManagementApp implements CommandLineRunner {
                     break;
             }
         } while (option != MenuOptions.EXIT);
-
         console.displayHeader("Goodbye");
     }
 
+    // Requests a product ID that is then verified against the database
+    // If product exists in the database the operation stops
+    // If product doesn't exist, the user must enter a product name, quantity and price
     public void addProduct() {
         console.displayHeader("===== Add Product =====\n");
         int productId = console.readInt("Enter Product ID: ", 100, dbRecords + 1);
@@ -83,17 +87,27 @@ public class InventoryManagementApp implements CommandLineRunner {
         }
     }
 
+    // A display of all the products in the database is presented with ID, Name, Quantity, Price
+    // Uses the ProductRepository method from JpaRepository findAll()
     public void viewProducts() {
         List<Product> products = productRepository.findAll();
         console.displayHeader("===== Inventory List =====");
-        console.displayHeader("ID    | Name          | Quantity         | Price  ");
+        String name = "Name";
+        String ID = "ID";
+        String quantity = "Quantity";
+        String price = "Price";
+        console.displayHeader(String.format("%-3s | %-13s | %-12s | %-1s", ID, name, quantity, price));
         console.displayHeader("----------------------------------------");
         for (Product product : products) {
-            System.out.println(product.getProductId() + "   | " + product.getName() + "       | " + product.getQuantity() + "       | $" + product.getPrice());
+            System.out.println(product.productLineString());
         }
         console.displayHeader("----------------------------------------");
     }
 
+    // User must enter a product ID or name to search the inventory database for existing product
+    // Checks whether user entered a numerical value for ID or a String-based name
+    // After the input value type is determine, the value is checked against the database
+    // Any matches will return the product information - ProductID, Name, Quantity, Price
     public String searchProduct() {
         Optional<Product> product;
         console.displayHeader("===== Search Product =====");
@@ -119,6 +133,14 @@ public class InventoryManagementApp implements CommandLineRunner {
         }
     }
 
+    // User must enter a numerical product ID within the acceptable range of values
+    // If not product found the operation stops
+    // If product is found, application displays current product details
+    // Application requests a new quantity, user can skip and keep original
+    //      - The quantity is validated for negatives, non-numerical values
+    // Application requests a new price, user can skip and keep original
+    //      - The price is validated for zero, negative, and non-numerical values
+    // Valid new entries are set to product properties updating the product details or product is unmodified if no new values
     public void updateProduct() {
         console.displayHeader("===== Update Product =====\n\n\n");
         int productId = console.readInt("Enter Product ID: ", 100, dbRecords);
@@ -144,15 +166,28 @@ public class InventoryManagementApp implements CommandLineRunner {
         }
     }
 
+    // User must enter a numerical product ID within the acceptable range of values
+    // If not product found the operation stops
+    // If product is found, application displays a confirmation prompt
+    // User must enter a specified value of Y or N to confirm deletion or continue without deletion
+    // After confirming deletion the product with given Product ID will be deleted
     public void deleteProduct() {
         console.displayHeader("===== Delete Product =====");
         int productId = console.readInt("Enter Product ID:", 100, dbRecords);
         Optional<Product> product = productRepository.findById(productId);
         if (product.isPresent()) {
-            String deletion = console.readRequiredString("\nAre you sure you want to delete? (Y/N):\n");
-            if (deletion.equals("y")) {
-                productRepository.delete(product.get());
-                console.displayHeader("Product successfully deleted.");
+            while (true) {
+                String deletion = console.readRequiredString("\nAre you sure you want to delete? (Y/N):\n");
+                if (deletion.equals("y")) {
+                    productRepository.delete(product.get());
+                    console.displayHeader("Product successfully deleted.");
+                    break;
+                }
+                if (deletion.equals("n")) {
+                    break;
+                } else {
+                    console.displayHeader("Enter (Y/N)");
+                }
             }
         } else {
             console.displayHeader("Product not found!");

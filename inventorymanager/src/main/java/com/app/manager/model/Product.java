@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.text.DecimalFormat;
 
 
 @Entity
@@ -62,17 +63,25 @@ public class Product implements Serializable {
 
     @Override
     public String toString() {
+        String pattern = "#0.00";
+        DecimalFormat myFormatter = new DecimalFormat(pattern);
         return
                 "\nID: " + productId +
                 "\nName: " + name +
-                "\nQuantity: "+ quantity+
-                "\nPrice: $" + price;
+                "\nQuantity: " + quantity +
+                "\nPrice: $" + myFormatter.format(price);
     }
 
     public String toStringNoId() {
+        String pattern = "#0.00";
+        DecimalFormat myFormatter = new DecimalFormat(pattern);
         return
                 "\nName: " + name +
-                "\nQuantity: "+ quantity+
-                "\nPrice: $" + price;
+                "\nQuantity: " + quantity +
+                "\nPrice: $" + myFormatter.format(price);
+    }
+
+    public String productLineString() {
+        return String.format("%-4d| %-15s| %-10d| $$%-10.2f", getProductId(), getName(), getQuantity(), getPrice());
     }
 }

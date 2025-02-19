@@ -32,6 +32,6 @@ public class PerishableProduct extends Product{
     @Override
     public String toString() {
         return  super.toString() +
-                "\nExpiration Date:" + expirationDate;
+                "\nExpiration Date: " + expirationDate;
     }
 }
