@@ -87,31 +87,6 @@ public class Console {
         return result;
     }
 
-    public int readIntOrEnter(String message) {
-        String input = null;
-        int result = 0;
-        boolean isValid = false;
-        do {
-            try {
-                input = readRequiredString(message);
-                result = Integer.parseInt(input);
-                isValid = true;
-            } catch (NumberFormatException ex) {
-                System.out.printf("%s is not a valid number.%n", input);
-            }
-        } while (!isValid);
-
-        return result;
-    }
-
-    public String checkStringIsEmpty(String message){
-        String result;
-        result = readString(message);
-
-        // return not empty is true or false
-        return result.trim();
-        }
-
     public double checkPrice(String message) {
         String result;
         result = readString(message);
@@ -119,7 +94,7 @@ public class Console {
             return -1.00;
         }
         else {
-            return validatePrice(result, 0.00, 10000.00);
+            return validatePrice(result, 0.25, 10000.00);
         }
     }
 
