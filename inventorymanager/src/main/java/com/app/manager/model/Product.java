@@ -83,6 +83,8 @@ public class Product implements Serializable {
 
     // Used to display formatted product information for each product in the database viewing all products
     public String productLineString() {
-        return String.format("%-4d| %-15s| %-10d| $$%-10.2f", getProductId(), getName(), getQuantity(), getPrice());
+        return String.format("%-4d| %-17s| %-5d| $%-10.2f", getProductId(), getName(), getQuantity(), getPrice());
     }
+
+
 }

@@ -27,7 +27,7 @@ public class Console {
 
     // Used for prompting user input
     private String readString(String message) {
-        System.out.print(message);
+        System.out.println(message);
         return console.nextLine();
     }
 
@@ -83,26 +83,33 @@ public class Console {
     }
 
     //  Checks for valid numerical values of type double
-    public double readDouble(String message) {
+    public double readDouble(String message, double min, double max) {
         String input = null;
-        double result = 0;
+        double result;
         boolean isValid = false;
         do {
             try {
                 input = readRequiredString(message);
-                result = Double.parseDouble(input);
+                Double.parseDouble(input);
                 isValid = true;
             } catch (NumberFormatException ex) {
                 System.out.printf("%s is not a valid number.%n", input);
             }
         } while (!isValid);
+        do {
+            result = Double.parseDouble(input);
+            if (result < min || result > max) {
+                System.out.printf("Value must be between %s and %s.%n", min, max);
+            }
+        } while (result < min || result > max);
 
-        return result;
+        return Double.parseDouble(input);
     }
 
-//     During product update user can enter new price
-//     Checks if input is empty  to decide the application flow - continue or branch into else
-//     If input double is not empty, the value is passed through a data type validation method
+
+    // During product update user can enter new price
+    // Checks if input is empty  to decide the application flow - continue or branch into else
+    // If input double is not empty, the value is passed through a data type validation method
     public double checkPrice(String message) {
         String result;
         result = readString(message);
@@ -124,9 +131,17 @@ public class Console {
             return -1;
         }
         else {
-            return validateQuantity(result, 0, 1000);
+            return validateQuantity(message, 0, 1000);
         }
     }
+
+
+
+
+
+
+
+
 
     // Validates an int data value within a range
     private int validateQuantity(String input, int min, int max){
@@ -149,6 +164,8 @@ public class Console {
             } while (quantity < min || quantity > max);
         return Integer.parseInt(input);
     }
+
+
 
     // Validates double data value within a range
     private double validatePrice(String input, double min, double max){

@@ -20,7 +20,7 @@ public class InventoryManagementApp implements CommandLineRunner {
     private ProductRepository productRepository;
 
     // Console instance for inputs and inventory interaction
-    // dbRecords for maximum integer values
+    // dbRecords used to set maximum integer values for id
     private Console console = new Console();;
     private int dbRecords;
 
@@ -35,7 +35,7 @@ public class InventoryManagementApp implements CommandLineRunner {
         String enter = "Press Enter to return to main menu...";
         MenuOptions option;
         do {
-            dbRecords = productRepository.findAll().size() + 500;
+            dbRecords = productRepository.findAll().size() + 200;
             option = console.displayMainMenu();
             switch (option) {
                 case ADD_PRODUCT:
@@ -77,8 +77,8 @@ public class InventoryManagementApp implements CommandLineRunner {
             console.displayHeader("Product exists.");
         } else {
             String productName = console.readRequiredString("Enter Product Name:");
-            int quantity = console.checkQuantity("Enter Quantity: ");
-            double price = console.checkPrice("Enter Price: ");
+            int quantity = console.readInt("Enter Quantity: ", 0, dbRecords);
+            double price = console.readDouble("Enter Price: ", 0.00, 1000.00);
             BigDecimal decimalPrice = new BigDecimal(price);
             Product newProduct = new Product(productName, decimalPrice, quantity);
             newProduct.setProductId(productId);
@@ -88,7 +88,7 @@ public class InventoryManagementApp implements CommandLineRunner {
     }
 
     // Displays all the products in the database with ID, Name, Quantity, Price as a header
-    // Each product record details are displayed on a new line
+    // Each product as a record is displayed on a new line
     // Uses the ProductRepository method from JpaRepository findAll()
     public void viewProducts() {
         List<Product> products = productRepository.findAll();
@@ -98,7 +98,7 @@ public class InventoryManagementApp implements CommandLineRunner {
         String quantity = "Quantity";
         String price = "Price";
         // Formats the number of spaces, left-aligned, and separated by pipe
-        console.displayHeader(String.format("%-3s | %-12s | %-14s | %-1s", ID, name, quantity, price));
+        console.displayHeader(String.format("%-3s | %-16s | %-5s | %-1s", ID, name, quantity, price));
         console.displayHeader("----------------------------------------");
         for (Product product : products) {
             System.out.println(product.productLineString());
@@ -108,7 +108,7 @@ public class InventoryManagementApp implements CommandLineRunner {
 
     // User must enter a product ID or name to search the inventory database for existing product
     // Checks whether user entered a numerical value for ID or a String-based name
-    // After the input value type is determine, the value is checked against the database
+    // After the input value type is determined, the value is checked against the database
     // Any matches will return the product information - ProductID, Name, Quantity, Price
     public String searchProduct() {
         Optional<Product> product;
@@ -136,7 +136,7 @@ public class InventoryManagementApp implements CommandLineRunner {
     }
 
     // User must enter a numerical product ID within the acceptable range of values
-    // If not product found the operation stops
+    // If product not found the operation stops
     // If product is found, application displays current product details
     // Application requests a new quantity, user can skip and keep original
     //      - The quantity is validated for negatives, non-numerical values
@@ -162,6 +162,7 @@ public class InventoryManagementApp implements CommandLineRunner {
             if (validPrice != -1.00) {
                 product.get().setPrice(BigDecimal.valueOf(validPrice));
             }
+            productRepository.save(product.get());
             console.displayHeader("Product updated successfully");
         } else {
             console.displayHeader("Product not found");
@@ -169,7 +170,7 @@ public class InventoryManagementApp implements CommandLineRunner {
     }
 
     // User must enter a numerical product ID within the acceptable range of values
-    // If not product found the operation stops
+    // If product not found the current operation stops returns to main menu
     // If product is found, application displays a confirmation prompt
     // User must enter a specified value of Y or N to confirm deletion or continue without deletion
     // After confirming deletion the product with given Product ID will be deleted

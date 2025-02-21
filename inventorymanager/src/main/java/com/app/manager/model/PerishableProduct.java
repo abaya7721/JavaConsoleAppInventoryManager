@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
 
-// @Entity used to denote this class corresponds to the table in a database
+// @Entity used to denote this class corresponds to the table product in a database
 // Differentiation is handled by @DiscriminatorValue
 // Product is differentiated by the 'perishable' value in column 'product_type'
 

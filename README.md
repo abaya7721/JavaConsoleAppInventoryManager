@@ -1,5 +1,6 @@
 # Inventory Manager
-App which uses console-based interface to manage inventory stored in a SQL database.
+App using console interface to manage inventory stored in a SQL database. 
+Built using Spring framework for Java and MySQL.
 
 ## Project Structure
   1. View 
@@ -9,10 +10,9 @@ App which uses console-based interface to manage inventory stored in a SQL datab
   2. Model
       * Product ([#product](https://github.com/abaya7721/JavaConsoleAppInventoryManager#product))
       * PerishableProduct
-  3. Data Access
+  3. Repository - Data Access
       * Interface ProductRepository ([#interface-productrepository](https://github.com/abaya7721/JavaConsoleAppInventoryManager#interface-productrepository))
-  4. Domain
-      * ProductService ([#productservice](https://github.com/abaya7721/JavaConsoleAppInventoryManager#productservice))
+
 
 ## View
 ### Console
